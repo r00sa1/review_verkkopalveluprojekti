@@ -1,0 +1,27 @@
+Tämä esim Joululahjapaperit.js -tiedostoon
+////
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+function Home() {
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    // Use axios inside the useEffect directly
+    axios.get('http://localhost:3001/products')
+      .then(resp => setProduct(resp.data.find(p => p.id === 8)))
+      .catch(error => console.log(error.message));
+
+    // Specify an empty dependency array so that this effect runs only once
+  }, []);
+
+  return (
+    <div>
+      <ul>
+        <img src={`http://localhost:3001/${product.imageUrl}`} alt="Kuva" />
+      </ul>
+    </div>
+  );
+}
+
+export default Home;
